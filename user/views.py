@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 #사용자가 데이터 베이스 안에 있는지 검사하는 함수
 from django.contrib import auth
 #Django의 인증 기능을 제공하는 헤더파일
+from django.contrib.auth.decorators import login_required
+
 
 from .models import UserModel
 # user app에서 작성한 클래스 UserModel을 import
@@ -22,7 +24,7 @@ def sign_up(request):
         if not user: #로그인을 하지 않았다면(Not False)
             return render(request, 'user/signup.html')
 
-            #로그인을 했다면 사용자가 요청한 이전의 경로로 되돌아간다.
+        #로그인을 했다면 사용자가 요청한 이전의 경로로 되돌아간다.
         return redirect('/')
 
     elif request.method == 'POST':
@@ -78,3 +80,8 @@ def sign_in(request):
         else :
             return render(request, 'user/signin.html')
         #GET이라면 화면에 HTML 출력
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/')

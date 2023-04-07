@@ -54,7 +54,7 @@ def sign_up(request):
                 username=username, password=password
             )
             # 로그인 페이지로 이동
-            return redirect('sign_in')
+            return redirect('sign-in')
 
 
 def sign_in(request):

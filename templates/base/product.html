@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>제품 등록</title>
+</head>
+<body>
+<h1>제품 등록 양식</h1>
+<form method="POST" action="/product/">
+    {% csrf_token %}
+    <label for="productName">제품 이름:</label>
+    <input type="text" id="productName" name="productName" placeholder="제품 이름을 입력하세요"><br><br>
+
+    <label for="productType">상품 종류:</label>
+    <select id="productType" name="productType">
+        <option value="hoodies">상의</option>
+        <option value="pants">하의</option>
+    </select><br><br>
+
+
+    <label for="productSize">Size:</label>
+    <select id="productSize" name="productSize">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="F">Free</option>
+    </select><br><br>
+
+
+    <label for="productPrice">가격:</label>
+    <input type="text" id="productPrice" name="productPrice" placeholder="숫자만 입력해 주세요."><br><br>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+
+    <input type="submit" value="등록">
+</form>
+</body>
+</html>

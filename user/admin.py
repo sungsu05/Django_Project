@@ -6,4 +6,3 @@ from .models import UserModel
 # Register your models here.
 admin.site.register(UserModel)
 # 이 코드가 나의 UserModel을 Admin에 추가 해 줍니다
-# 관리자 페이지에 입력한다.

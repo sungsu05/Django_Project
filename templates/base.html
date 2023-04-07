@@ -1,1 +1,91 @@
-hello Django!
+<!DOCTYPE html>
+<html>
+<head>
+    <title>의류 재고 관리</title>
+</head>
+<style>
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .btn {
+        background-color: limegreen;
+        color: white;
+        text-align: center;
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        margin: 5px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+<body>
+<div style="text-align: center">
+    <h1>의류 재고 관리</h1>
+</div>
+<div style="display: flex">
+    {% if not user.is_authenticated %}
+        <a href="/sign-in">
+            <div class="btn">로그인</div>
+        </a>
+        <a href="/sign-up">
+            <div class="btn">회원가입</div>
+        </a>
+    {% else %}
+        <a href="/product">
+            <div class="btn">상품 추가</div>
+        </a>
+        <a href="/product">
+            <div class="btn">상품 입고</div>
+        </a>
+        <a href="/product">
+            <div class="btn">상품 출고</div>
+        </a>
+        <a href="/logout">
+            <div class="btn">로그아웃</div>
+        </a>
+    {% endif %}
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>상품 명</th>
+        <th>상품 번호</th>
+        <th>상품 종류</th>
+        <th>사이즈</th>
+        <th>가격</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.code }}</td>
+            <td>{{ product.type }}</td>
+            <td>{{ product.size }}</td>
+            <td>{{ product.price }}</td>
+            {% if request.user == product.author %}
+                <td><a href="{% url 'delete_product' product.id %}">Delete</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

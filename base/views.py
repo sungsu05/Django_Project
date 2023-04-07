@@ -1,8 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from .models import Product
 from django.contrib.auth.decorators import login_required
-from .models import UserModel
-from django.db.models import F
 
 #base화면 html 출력
 def base(request):
@@ -11,7 +9,7 @@ def base(request):
 
 
 # 상품 등록
-@login_required(login_url='/sign-in/')
+@login_required
 def registrations(request):
     if request.method == 'GET':
         return render(request, 'base/product.html')

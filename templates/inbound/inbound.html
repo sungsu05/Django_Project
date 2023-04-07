@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>제품 등록</title>
+</head>
+<style>
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+</style>
+<body>
+<form method="POST" action="/product-code-search/">
+    {% csrf_token %}
+    <div style="margin-top: 80px; margin-left: 80px">
+        <label for="product-code">상품 조회:</label>
+        <input type="text" id="product-code" name="product-code" placeholder="상품 코드를 입력해주세요.">
+        <input type="submit" value="Search">
+    </div>
+</form>
+
+<form method="POST">
+    {% for item in product %}
+        {% csrf_token %}
+        <label for="input-inbound">입고:</label>
+        <input type="text" id="input-inbound" name="input-inbound" placeholder="입고 수량을 입력해주세요.">
+        <input type="submit" value="Search">
+    {% endfor %}
+</form>
+{% if error %}
+    <div style="background-color: tan; color: white; width: 300px; margin-left: 80px;">
+        {{ error }}
+    </div>
+{% endif %}
+
+
+<table style="margin-top: 60px">
+    <thead>
+    <tr>
+        <th>상품 명</th>
+        <th>상품 번호</th>
+        <th>상품 종류</th>
+        <th>사이즈</th>
+        <th>가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in product %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.code }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

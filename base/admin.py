@@ -3,6 +3,4 @@ from django.contrib import admin
 from .models import Product
 # 우리가 생성한 모델을 가져오는 것
 
-# Register your models here.
 admin.site.register(Product)
-# 이 코드가 나의 UserModel을 Admin에 추가 해 줍니다

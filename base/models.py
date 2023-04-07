@@ -9,6 +9,7 @@ class Product(models.Model):
     name = models.CharField(max_length=20)
     type = models.CharField(max_length=200)
     price = models.FloatField(null=True, default=0)
+
     sizes = (
         ('S', 'Small'),
         ('M', 'Medium'),

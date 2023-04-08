@@ -4,6 +4,10 @@
     <title>제품 등록</title>
 </head>
 <style>
+    body {
+        background-color: gray;
+    }
+
     table {
         width: 80%;
         margin: 0 auto;
@@ -22,18 +26,27 @@
     <div style="margin-top: 80px; margin-left: 80px">
         <label for="product-code">상품 조회:</label>
         <input type="text" id="product-code" name="product-code" placeholder="상품 코드를 입력해주세요.">
-        <input type="submit" value="Search">
+        <input type="submit" value="검색">
     </div>
 </form>
+{% for item in product %}
+    <form method="POST" action="/inbound-history/">
 
-<form method="POST">
-    {% for item in product %}
         {% csrf_token %}
-        <label for="input-inbound">입고:</label>
-        <input type="text" id="input-inbound" name="input-inbound" placeholder="입고 수량을 입력해주세요.">
-        <input type="submit" value="Search">
-    {% endfor %}
-</form>
+        <div style="margin-left: 80px">
+            <input type="hidden" name = "product-code", value = "{{ item.code }}">
+
+            <label for="input-quantity">상품 입고:</label>
+            <input type="text" id="inbound_quantity" name="inbound_quantity" placeholder="입고 수량을 입력해주세요.">
+
+            <label for="input-price">입고 가격:</label>
+            <input type="text" id="inbound_price" name="inbound_price" placeholder="입고 가격을 입력해주세요.">
+
+            <input type="submit" value="입고 확인">
+        </div>
+
+    </form>
+{% endfor %}
 {% if error %}
     <div style="background-color: tan; color: white; width: 300px; margin-left: 80px;">
         {{ error }}

@@ -4,6 +4,28 @@
     <title>의류 재고 관리</title>
 </head>
 <style>
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+        background-color: #aef0ff;
+        height: 70px;
+    }
+
+    .main {
+        flex: 1;
+        text-align: center;
+    }
+
+    .username {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
     table {
         width: 80%;
         margin: 0 auto;
@@ -35,8 +57,9 @@
     }
 </style>
 <body>
-<div style="text-align: center">
-    <h1>의류 재고 관리</h1>
+<div class="title">
+    <div class="main">스파르타 물류센터</div>
+    <div class="username"> ID : {{ request.user }}</div>
 </div>
 <div style="display: flex">
     {% if not user.is_authenticated %}

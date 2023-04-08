@@ -4,9 +4,28 @@
     <title>제품 등록</title>
 </head>
 <style>
-    body {
-        background-color: gray;
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+        background-color: #aef0ff;
+        height: 70px;
     }
+
+    .main {
+        flex: 1;
+        text-align: center;
+    }
+
+    .username {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
 
     table {
         width: 80%;
@@ -21,9 +40,14 @@
     }
 </style>
 <body>
+<div class="title">
+    <div class="main">스파르타 물류센터</div>
+    <div class="username"> ID : {{ request.user }}</div>
+</div>
+
 <form method="POST" action="/product-code-search/">
     {% csrf_token %}
-    <div style="margin-top: 80px; margin-left: 80px">
+    <div style="margin-top: 40px; margin-left: 80px">
         <label for="product-code">상품 조회:</label>
         <input type="text" id="product-code" name="product-code" placeholder="상품 코드를 입력해주세요.">
         <input type="submit" value="검색">
@@ -34,7 +58,7 @@
 
         {% csrf_token %}
         <div style="margin-left: 80px">
-            <input type="hidden" name = "product-code", value = "{{ item.code }}">
+            <input type="hidden" name="product-code" , value="{{ item.code }}">
 
             <label for="input-quantity">상품 입고:</label>
             <input type="text" id="inbound_quantity" name="inbound_quantity" placeholder="입고 수량을 입력해주세요.">
@@ -57,6 +81,7 @@
 <table style="margin-top: 60px">
     <thead>
     <tr>
+        <th>등록 유저</th>
         <th>상품 명</th>
         <th>상품 번호</th>
         <th>상품 종류</th>
@@ -67,6 +92,7 @@
     <tbody>
     {% for item in product %}
         <tr>
+            <td>{{ item.author }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.code }}</td>
             <td>{{ item.type }}</td>
@@ -75,6 +101,27 @@
         </tr>
     {% endfor %}
     </tbody>
+
 </table>
+<div style="margin-top: 80px">
+    <table>
+        <thead>
+        <tr>
+            <th>입고 날짜</th>
+            <th>입고 수량</th>
+            <th>입고 가격</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in inbound %}
+            <tr>
+                <td>{{ item.inbound_quantity }}</td>
+                <td>{{ item.created_at }}</td>
+                <td>{{ item.inbound_price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

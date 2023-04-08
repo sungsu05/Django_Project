@@ -5,4 +5,5 @@ urlpatterns = [
     path('',include('user.urls')), # user app url 연결
     path('',include('base.urls')), # base app url 연결
     path('',include('inbound.urls')), # inbound app url 연결
+path('',include('outbound.urls')), # outbound app url 연결
 ]

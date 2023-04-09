@@ -2,9 +2,9 @@ from django.db import models
 from base.models import Product
 # Create your models here.
 
-class Invetory(models.Model):
+class Inventory(models.Model):
     class Meta:
-        db_table='invetory'
+        db_table='inventory'
     product = models.OneToOneField(Product,on_delete=models.CASCADE)
 
     #총 입-출고 가격

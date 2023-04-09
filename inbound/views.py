@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from base.models import Product
 from .models import Inbound
 from outbound.models import OutBound
+from inventory.models import Inventory
+from inventory.views import inventory
 import re
 
 def inbound_create(request):
@@ -31,11 +33,26 @@ def search(request):
             #상품의 출고내역 조회
             outbound = OutBound.objects.filter(product=search_product).order_by(('-outbound_created_at'))
 
+            #상품의 입출고 합산 내역 조회
+            inventory = Inventory.objects.filter(product=search_product)
+
+            # 상품의 총 재고량 , 영업 이익
+            product_total = Inventory.objects.get(product=search_product)
+            profit = product_total.total_outbound_price - product_total.total_inbound_price
+            product_total = product_total.total_inbound_quantity - product_total.total_outbound_quantity
+            product_info ={
+                'profit' : profit,
+                'product_total' : product_total
+            }
 
             #context에 두 딕셔너리 추가
             context = {'product': product}
             context.update({'inbound':inbound})
             context.update({'outbound':outbound})
+            context.update({'inventory':inventory})
+            context.update({'product_info':product_info})
+
+
 
         return render(request, 'inbound/inbound.html', context)
 
@@ -63,12 +80,28 @@ def inbound_history(request):
         new_inbound = Inbound(product=product,inbound_quantity=inbound_quantity,inbound_price=inbound_price)
         new_inbound.save()
 
+        # 입고 합산 내역 저장
+        inventory(product_code)
+        # 입고 합산 내역 조회
+        inventory_ = Inventory.objects.filter(product=product)
+
         # 총 입고 내역 product__code : product모델의 code 필드 검색
         inbound = Inbound.objects.filter(product__code=product_code).order_by('-created_at')
         product = Product.objects.filter(code=product_code)
 
+        product_total = Inventory.objects.get(product=product_code)
+        profit = product_total.total_outbound_price - product_total.total_inbound_price
+        product_total = product_total.total_inbound_quantity - product_total.total_outbound_quantity
+        product_info = {
+            'profit': profit,
+            'product_total': product_total
+        }
+
+
         # 입고내역과, 상품정보 딕셔너리 리스트에 담기
         context = { 'product':product }
         context.update({ 'inbound':inbound })
+        context.update({'inventory': inventory_})
+        context.update({'product_info': product_info})
 
         return render(request, 'inbound/inbound.html', context)

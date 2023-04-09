@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('product', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='base.product')),
             ],
             options={
-                'db_table': 'invetory',
+                'db_table': 'inventory',
             },
         ),
     ]

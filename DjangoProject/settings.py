@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'base',
     'inbound',
     'outbound',
-    'invetory',
+    'inventory',
 ]
 
 MIDDLEWARE = [

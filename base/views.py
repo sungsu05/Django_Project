@@ -22,11 +22,12 @@ def registrations(request):
         author = request.user
 
         new_product = Product(author=author, name=product_name, type=product_type, size=product_size,price=product_price)
-        new_product.save()
+        print(new_product.author)
 
 
         #상품 코드 번호 부여
-        code = str(new_product.id).zfill(4)
+        total_products = Product.objects.count()
+        code = "{:04d}".format(total_products + 1)
         new_product.code = code
         new_product.save()
 

@@ -58,8 +58,10 @@
 </style>
 <body>
 <div class="title">
-    <div class="main">스파르타 물류센터</div>
+    <div class="main"><a href="/">스파르타 물류센터</a></div>
+    {% if user.is_authenticated %}
     <div class="username"> ID : {{ request.user }}</div>
+    {% endif %}
 </div>
 <div style="display: flex">
     {% if not user.is_authenticated %}
@@ -74,10 +76,7 @@
             <div class="btn">상품 추가</div>
         </a>
         <a href="/inbound">
-            <div class="btn">상품 입고</div>
-        </a>
-        <a href="/product">
-            <div class="btn">상품 출고</div>
+            <div class="btn">상품 입-출고</div>
         </a>
         <a href="/logout">
             <div class="btn">로그아웃</div>
@@ -87,6 +86,7 @@
 <table>
     <thead>
     <tr>
+        <th>등록자</th>
         <th>상품 명</th>
         <th>상품 번호</th>
         <th>상품 종류</th>
@@ -98,6 +98,7 @@
     <tbody>
     {% for product in products %}
         <tr>
+            <td>{{ product.author }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.code }}</td>
             <td>{{ product.type }}</td>

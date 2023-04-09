@@ -8,7 +8,7 @@ class Product(models.Model):
     code = models.CharField(max_length=5)
     name = models.CharField(max_length=20)
     type = models.CharField(max_length=200)
-    price = models.FloatField(null=True, default=0)
+    price = models.PositiveIntegerField()
 
     sizes = (
         ('S', 'Small'),

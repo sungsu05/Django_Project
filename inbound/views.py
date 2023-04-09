@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Inbound
 from base.models import Product
 from .models import Inbound
+from outbound.models import OutBound
 import re
 
 def inbound_create(request):
@@ -25,12 +25,17 @@ def search(request):
             context['error'] = '코드번호와 일치하는 상품이 없습니다.'
         else :
             #상품의 입고내역 조회
-            inbound_product = Product.objects.get(code=search_code)
-            inbound = Inbound.objects.filter(product=inbound_product).order_by('-created_at')
+            search_product = Product.objects.get(code=search_code)
+            inbound = Inbound.objects.filter(product=search_product).order_by('-created_at')
+
+            #상품의 출고내역 조회
+            outbound = OutBound.objects.filter(product=search_product).order_by(('-outbound_created_at'))
+
 
             #context에 두 딕셔너리 추가
             context = {'product': product}
             context.update({'inbound':inbound})
+            context.update({'outbound':outbound})
 
         return render(request, 'inbound/inbound.html', context)
 

@@ -14,16 +14,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='OutBound',
+            name='Invetory',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('outbound_quantity', models.PositiveIntegerField()),
-                ('outbound_created_at', models.DateTimeField(auto_now_add=True)),
-                ('outbound_price', models.PositiveIntegerField()),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='base.product')),
+                ('total_inbound_price', models.IntegerField()),
+                ('total_outbound_price', models.IntegerField()),
+                ('total_inbound_quantity', models.IntegerField()),
+                ('total_outbound_quantity', models.IntegerField()),
+                ('product', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='base.product')),
             ],
             options={
-                'db_table': 'out_bound',
+                'db_table': 'invetory',
             },
         ),
     ]

@@ -1,19 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login Page</title>
+    <title>로그인 페이지</title>
 </head>
+<style>
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+        background-color: #aef0ff;
+        height: 70px;
+    }
+
+    .main {
+        flex: 1;
+        text-align: center;
+    }
+
+    .username {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
 <body>
-	<h2>Login</h2>
-	<form method="POST" action = "/sign-in/">
-		{% csrf_token %}
-		<label for="username">이름:</label>
-		<input type="text" id="username" placeholder="이름" name="username">
-		<br><br>
-		<label for="password">비밀번호:</label>
-		<input type="password" id="password"  placeholder="비밀번호" name="password">
-		<br><br>
-		<input type="submit" value="Login">
-	</form>
+<div class="title">
+    <div class="main"><a href="/">스파르타 물류센터</a></div>
+    {% if user.is_authenticated %}
+        <div class="username"> ID : {{ request.user }}</div>
+    {% endif %}
+</div>
+<h2>Login</h2>
+<form method="POST" action="/sign-in/">
+    {% csrf_token %}
+    <label for="username">이름:</label>
+    <input type="text" id="username" placeholder="이름" name="username">
+    <br><br>
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" placeholder="비밀번호" name="password">
+    <br><br>
+    <input type="submit" value="Login">
+</form>
 </body>
 </html>

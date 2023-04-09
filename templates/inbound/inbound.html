@@ -26,6 +26,9 @@
         margin-right: 20px;
     }
 
+    a {
+        text-decoration: none;
+    }
 
     table {
         width: 80%;
@@ -41,8 +44,10 @@
 </style>
 <body>
 <div class="title">
-    <div class="main">스파르타 물류센터</div>
-    <div class="username"> ID : {{ request.user }}</div>
+    <div class="main"><a href="/">스파르타 물류센터</a></div>
+    {% if user.is_authenticated %}
+        <div class="username"> ID : {{ request.user }}</div>
+    {% endif %}
 </div>
 
 <form method="POST" action="/product-code-search/">
@@ -53,6 +58,9 @@
         <input type="submit" value="검색">
     </div>
 </form>
+
+
+
 {% for item in product %}
     <form method="POST" action="/inbound-history/">
 
@@ -71,6 +79,27 @@
 
     </form>
 {% endfor %}
+
+{% for item in product %}
+    <form method="POST" action="/out-bound/">
+
+        {% csrf_token %}
+        <div style="margin-left: 80px">
+            <input type="hidden" name="product-code" , value="{{ item.code }}">
+
+            <label for="output-quantity">상품 출고:</label>
+            <input type="text" id="outbound_quantity" name="outbound_quantity" placeholder="출고 수량을 입력해주세요.">
+
+            <label for="input-price">출고 가격:</label>
+            <input type="text" id="outbound_price" name="outbound_price" placeholder="출고 가격을 입력해주세요.">
+
+            <input type="submit" value="출고 확인">
+        </div>
+
+    </form>
+{% endfor %}
+
+
 {% if error %}
     <div style="background-color: tan; color: white; width: 300px; margin-left: 80px;">
         {{ error }}
@@ -115,9 +144,29 @@
         <tbody>
         {% for item in inbound %}
             <tr>
-                <td>{{ item.inbound_quantity }}</td>
                 <td>{{ item.created_at }}</td>
-                <td>{{ item.inbound_price }}</td>
+                <td>{{ item.inbound_quantity }}개</td>
+                <td>{{ item.inbound_price }}원</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div style="margin-top: 80px">
+    <table>
+        <thead>
+        <tr>
+            <th>출고 날짜</th>
+            <th>출고 수량</th>
+            <th>출고 가격</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in outbound %}
+            <tr>
+                <td>{{ item.outbound_quantity }}</td>
+                <td>{{ item.outbound_created_at }}개</td>
+                <td>{{ item.outbound_price }}원</td>
             </tr>
         {% endfor %}
         </tbody>

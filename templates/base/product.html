@@ -3,7 +3,40 @@
 <head>
     <title>제품 등록</title>
 </head>
+<style>
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+        background-color: #aef0ff;
+        height: 70px;
+    }
+
+    .main {
+        flex: 1;
+        text-align: center;
+    }
+
+    .username {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
 <body>
+<div class="title">
+    <div class="main"><a href="/">스파르타 물류센터</a></div>
+    {% if user.is_authenticated %}
+        <div class="username"> ID : {{ request.user }}</div>
+    {% endif %}
+</div>
 <h1>제품 등록 양식</h1>
 <form method="POST" action="/product/">
     {% csrf_token %}
